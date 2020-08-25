@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.color-pop-anime {
+  color: #ff972a;
+}
+
+.color-nico-vocaloid {
+  color: #09c8d4;
+}
+
+.color-touhou {
+  color: #ba60ff;
+}
+
+.color-game-variety {
+  color: #42de6a;
+}
+
+.color-maimai {
+  color: #f74949;
+}
