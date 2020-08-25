@@ -163,11 +163,11 @@ class MaimaiSelector extends React.Component {
             <div className="row py-1">
               <div className="col-sm-1" style={{ paddingTop: "0.4em", whiteSpace: "nowrap" }}>流派</div>
               <ButtonGroup className="col">
-                <Button outline color='warning' onClick={() => this.handleCategoryChange('流行＆动漫')} active={this.state.Category.includes('流行＆动漫')}>流行＆动漫</Button>
-                <Button outline color='info' onClick={() => this.handleCategoryChange('niconico＆VOCALOID')} active={this.state.Category.includes('niconico＆VOCALOID')}>nico<wbr />nico<wbr />＆<wbr />VOCA<wbr />LOID</Button>
-                <Button outline color='primary' onClick={() => this.handleCategoryChange('东方Project')} active={this.state.Category.includes('东方Project')}>东方Project</Button>
-                <Button outline color='success' onClick={() => this.handleCategoryChange('综艺节目')} active={this.state.Category.includes('综艺节目')}>综艺节目</Button>
-                <Button outline color='danger' onClick={() => this.handleCategoryChange('原创乐曲')} active={this.state.Category.includes('原创乐曲')}>原创乐曲</Button>
+                <Button outline color='pop-anime' onClick={() => this.handleCategoryChange('流行＆动漫')} active={this.state.Category.includes('流行＆动漫')}>流行＆动漫</Button>
+                <Button outline color='nico-vocaloid' onClick={() => this.handleCategoryChange('niconico＆VOCALOID')} active={this.state.Category.includes('niconico＆VOCALOID')}>nico<wbr />nico<wbr />＆<wbr />VOCA<wbr />LOID</Button>
+                <Button outline color='touhou' onClick={() => this.handleCategoryChange('东方Project')} active={this.state.Category.includes('东方Project')}>东方Project</Button>
+                <Button outline color='game-variety' onClick={() => this.handleCategoryChange('综艺节目')} active={this.state.Category.includes('综艺节目')}>综艺节目</Button>
+                <Button outline color='maimai' onClick={() => this.handleCategoryChange('原创乐曲')} active={this.state.Category.includes('原创乐曲')}>原创乐曲</Button>
                 <Button outline color='secondary' onClick={() => this.handleCategoryChange('RESET')}>清空</Button>
               </ButtonGroup>
             </div>

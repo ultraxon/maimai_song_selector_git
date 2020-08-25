@@ -17,3 +17,26 @@ code {
   text-decoration: none;
   color: #6c757d;
 }
+
+/*
+  "pop-anime":     { color: '#ff972a' },
+  "nico-vocaloid": { color: '#09c8d4' },
+  "touhou":        { color: '#ba60ff' },
+  "game-variety":  { color: '#42de6a' },
+  "maimai":        { color: '#f74949' }
+  */
+
+.btn-outline-pop-anime { background-color: transparent; border-color: #ff972a; color: #ff972a; }
+.btn-outline-pop-anime.active { background-color: #ff972a; color: white; }
+
+.btn-outline-nico-vocaloid { background-color: transparent; border-color: #09c8d4; color: #09c8d4; }
+.btn-outline-nico-vocaloid.active { background-color: #09c8d4; color: white; }
+
+.btn-outline-touhou { background-color: transparent; border-color: #ba60ff; color: #ba60ff; }
+.btn-outline-touhou.active { background-color: #ba60ff; color: white; }
+
+.btn-outline-game-variety { background-color: transparent; border-color:#42de6a; color: #42de6a; }
+.btn-outline-game-variety.active { background-color: #42de6a; color: white; }
+
+.btn-outline-maimai { background-color: transparent; border-color: #f74949; color: #f74949; }
+.btn-outline-maimai.active { background-color: #f74949; color: white; }
