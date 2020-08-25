@@ -12,22 +12,8 @@ code {
     monospace;
 }
 
-.color-pop-anime {
-  color: #ff972a;
-}
-
-.color-nico-vocaloid {
-  color: #09c8d4;
-}
-
-.color-touhou {
-  color: #ba60ff;
-}
-
-.color-game-variety {
-  color: #42de6a;
-}
-
-.color-maimai {
-  color: #f74949;
+.btn:hover {
+  background-color: transparent;
+  text-decoration: none;
+  color: #6c757d;
 }

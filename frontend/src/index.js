@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Button, ButtonGroup } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css'
 
 const styles = {
   "pop-anime":     { textAlign: "center", color: '#ff972a' },
@@ -112,6 +113,10 @@ class MaimaiSelector extends React.Component {
       category_selected.splice(index, 1);
     }
 
+    if (selected === "RESET") {
+      category_selected.length = 0;
+    }
+
     this.setState({
       Category: category_selected,
     });
@@ -163,6 +168,7 @@ class MaimaiSelector extends React.Component {
                 <Button outline color='primary' onClick={() => this.handleCategoryChange('东方Project')} active={this.state.Category.includes('东方Project')}>东方Project</Button>
                 <Button outline color='success' onClick={() => this.handleCategoryChange('综艺节目')} active={this.state.Category.includes('综艺节目')}>综艺节目</Button>
                 <Button outline color='danger' onClick={() => this.handleCategoryChange('原创乐曲')} active={this.state.Category.includes('原创乐曲')}>原创乐曲</Button>
+                <Button outline color='secondary' onClick={() => this.handleCategoryChange('RESET')}>清空</Button>
               </ButtonGroup>
             </div>
             <div className="row py-1">
