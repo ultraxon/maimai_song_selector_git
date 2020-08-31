@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, ButtonGroup } from 'reactstrap';
 
@@ -37,10 +37,6 @@ function DisplayResult(props) {
 }
 
 class Navibar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
         <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
