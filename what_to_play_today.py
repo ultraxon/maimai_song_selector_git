@@ -1,10 +1,8 @@
-import pandas as pd
-import numpy as np
+import sqlite3
 
 
 class MDZZ():
-    def __init__(self, data_info):
-        self.full_song_info = data_info
+    def __init__(self):
         self.full_stars_list = [
             '1', '2', '3', '4', '5', '6', '7', '7+', '8', '8+', '9', '9+',
             '10', '10+', '11', '11+', '12', '12+', '13', '13+', '14'
@@ -18,12 +16,12 @@ class MDZZ():
             '流行＆动漫', 'niconico＆VOCALOID', '东方Project', '综艺节目', '原创乐曲'
         ]
 
-    def random_select(self,
-                      lower_bound=None,
-                      upper_bound=None,
-                      difficulty=None,
-                      category=None):
-        # BASED ON STARS: REQUIRED
+    def random_select_sqlite(self,
+                             lower_bound=None,
+                             upper_bound=None,
+                             difficulty=None,
+                             category=None):
+        # STARS
         if lower_bound is not None:
             self.lower_bound = lower_bound
         if upper_bound is not None:
@@ -35,30 +33,53 @@ class MDZZ():
             tmp = upper
             upper = low
             low = tmp
+        selected_stars = self.full_stars_list[low:upper + 1]
 
-        selected_info = self.full_song_info[self.full_song_info.Stars.isin(
-            self.full_stars_list[low:upper + 1])]
-
-        # BASED ON DIFFICULTY: OPTIONAL
-        if difficulty is not None and difficulty != 'Any':
-            difficulty_to_query = [difficulty]
-            if difficulty == 'Master+Re':
-                difficulty_to_query = ['Master', 'Re:Master']
-            selected_info = selected_info[selected_info.Difficulty.isin(
-                difficulty_to_query)]
-
-        # BASED ON CATEGORY
-        if category is not None:
-            selected_info = selected_info[selected_info.Category.isin(
-                category)]
-
-        if len(selected_info) != 0:
-            random_result = selected_info.sample(frac=(1 / len(selected_info)))
-            return [
-                random_result['Category'].values[0],
-                random_result['Music_name'].values[0],
-                random_result['Difficulty'].values[0],
-                random_result['Stars'].values[0]
-            ]
+        # DIFFICULTY
+        selected_difficulty = []
+        if difficulty == 'Any':
+            selected_difficulty = self.difficulty_list
+        elif difficulty == 'Master+Re':
+            selected_difficulty = ['Master', 'Re:Master']
         else:
+            selected_difficulty = [difficulty]
+
+        # OPEN SQL CONNECTION
+        conn = sqlite3.connect('maimai_info.db')
+        c = conn.cursor()
+
+        # BUILD QUERY STR
+        stars_query_str = "("
+        for star in selected_stars:
+            stars_query_str += "'%s'," % (star)
+        stars_query_str = stars_query_str[:-1]
+        stars_query_str += ")"
+
+        difficulty_query_str = "("
+        for diff in selected_difficulty:
+            difficulty_query_str += "'%s'," % (diff)
+        difficulty_query_str = difficulty_query_str[:-1]
+        difficulty_query_str += ")"
+
+        category_query_str = "("
+        for cate in category:
+            category_query_str += "'%s'," % (cate)
+        category_query_str = category_query_str[:-1]
+        category_query_str += ")"
+
+        full_query_str = " \
+            SELECT CATEGORY, MUSIC_NAME, DIFFICULTY, STARS \
+            FROM MAIMAI_MUSIC_INFO \
+            WHERE STARS IN %s AND DIFFICULTY IN %s AND CATEGORY IN %s \
+            ORDER BY RANDOM() limit 1;\
+        " % (stars_query_str, difficulty_query_str, category_query_str)
+
+        # QUERY
+        cursor = c.execute(full_query_str)
+        query_result = cursor.fetchall()
+        conn.close()
+        # RETURN RESULT
+        if len(query_result) == 0:
             return -1
+        else:
+            return query_result[0]

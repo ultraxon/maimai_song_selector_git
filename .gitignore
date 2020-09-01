@@ -1,2 +1,6 @@
 
 test.db
+/static
+/templates
+*.pyc
+maimai_info.db

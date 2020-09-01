@@ -6,11 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 
 const styles = {
-  "pop-anime":     { textAlign: "center", color: '#ff972a' },
+  "pop-anime": { textAlign: "center", color: '#ff972a' },
   "nico-vocaloid": { textAlign: "center", color: '#09c8d4' },
-  "touhou":        { textAlign: "center", color: '#ba60ff' },
-  "game-variety":  { textAlign: "center", color: '#42de6a' },
-  "maimai":        { textAlign: "center", color: '#f74949' }
+  "touhou": { textAlign: "center", color: '#ba60ff' },
+  "game-variety": { textAlign: "center", color: '#42de6a' },
+  "maimai": { textAlign: "center", color: '#f74949' }
 };
 
 function key_translate(ss) {
@@ -30,8 +30,8 @@ function DisplayResult(props) {
   return (
     <div className='py-3'>
       <div name='Category' style={style_c}><h5>{props.Category}</h5></div>
-      <div name='MusicName' style={{textAlign: "center",}}><h3>{props.MusicName}</h3></div>
-      <div name='Difficulty' style={{textAlign: "center",}}><h5>{props.Difficulty}&nbsp;{props.Stars}</h5></div>
+      <div name='MusicName' style={{ textAlign: "center", }}><h3>{props.MusicName}</h3></div>
+      <div name='Difficulty' style={{ textAlign: "center", }}><h5>{props.Difficulty}&nbsp;{props.Stars}</h5></div>
     </div>
   );
 }
@@ -39,9 +39,9 @@ function DisplayResult(props) {
 class Navibar extends React.Component {
   render() {
     return (
-        <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
-          <a className='navbar-brand' href='#'>今天打什么</a>
-        </nav>
+      <nav className='navbar navbar-expand-sm navbar-dark bg-dark'>
+        <a className='navbar-brand' href='#'>今天打什么</a>
+      </nav>
     );
   }
 }
@@ -60,6 +60,8 @@ class MaimaiSelector extends React.Component {
       returnDifficulty: '',
       returnMusicName: '',
       returnStar: '',
+
+      alertText: '',
     }
 
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -71,32 +73,43 @@ class MaimaiSelector extends React.Component {
   }
 
   handleSubmit(event) {
-    let params = {
-      'Category': this.state.Category,
-      'Difficulty': this.state.Difficulty,
-      'starsLowerBound': this.state.starsLowerBound,
-      'starsUpperBound': this.state.starsUpperBound,
-    };
-
-    fetch('/data',
-      {
-        method: 'POST',
-        body: JSON.stringify(params),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then((response) => (response.json()))
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          returnCategory: data.Category,
-          returnDifficulty: data.Difficulty,
-          returnMusicName: data.MusicName,
-          returnStar: data.Stars,
-        });
+    if (this.state.Category.length == 0) {
+      this.setState({
+        alertText: '请至少选择一个流派',
       });
+      
+      event.preventDefault();
+    } else {
+      this.setState({
+        alertText: '',
+      });
+      let params = {
+        'Category': this.state.Category,
+        'Difficulty': this.state.Difficulty,
+        'starsLowerBound': this.state.starsLowerBound,
+        'starsUpperBound': this.state.starsUpperBound,
+      };
 
-    event.preventDefault();
+      fetch('/data',
+        {
+          method: 'POST',
+          body: JSON.stringify(params),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then((response) => (response.json()))
+        .then((data) => {
+          console.log(data);
+          this.setState({
+            returnCategory: data.Category,
+            returnDifficulty: data.Difficulty,
+            returnMusicName: data.MusicName,
+            returnStar: data.Stars,
+          });
+        });
+
+      event.preventDefault();
+    }
   }
 
   handleCategoryChange(selected) {
@@ -145,7 +158,7 @@ class MaimaiSelector extends React.Component {
     return (
       <div className='container py-3'>
         <div className="result">
-          { this.state.returnMusicName === "" ? null : <DisplayResult
+          {this.state.returnMusicName === "" ? null : <DisplayResult
             Category={this.state.returnCategory}
             MusicName={this.state.returnMusicName}
             Difficulty={this.state.returnDifficulty}
@@ -194,6 +207,7 @@ class MaimaiSelector extends React.Component {
             <div className="col py-3" style={{ textAlign: "center" }}>
               <Button color='primary' type="submit" className='col-6'>提交</Button>
             </div>
+            <div style={{ textAlign: "center", color: '#ff0000' }}>{this.state.alertText}</div>
           </form>
         </div>
       </div>
@@ -202,8 +216,8 @@ class MaimaiSelector extends React.Component {
 }
 
 ReactDOM.render(
-    <Navibar />,
-    document.getElementById('navbar')
+  <Navibar />,
+  document.getElementById('navbar')
 )
 
 ReactDOM.render(

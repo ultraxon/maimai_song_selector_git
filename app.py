@@ -22,8 +22,8 @@ def handle_post():
     starsLowerBound = request_data['starsLowerBound']
     starsUpperBound = request_data['starsUpperBound']
 
-    selector = MDZZ(data_info)
-    result = selector.random_select(lower_bound=starsLowerBound, upper_bound=starsUpperBound, difficulty=difficulty, category=category)
+    selector = MDZZ()
+    result = selector.random_select_sqlite(lower_bound=starsLowerBound, upper_bound=starsUpperBound, difficulty=difficulty, category=category)
 
     json_return = {
         'ret_type': 0,
@@ -42,7 +42,6 @@ def handle_post():
         json_return['Stars'] = result[3]
         
     print(result)
-
     return jsonify(json_return), 201
 
 
