@@ -23,7 +23,10 @@ def handle_post():
     starsUpperBound = request_data['starsUpperBound']
 
     selector = MDZZ()
-    result = selector.random_select_sqlite(lower_bound=starsLowerBound, upper_bound=starsUpperBound, difficulty=difficulty, category=category)
+    result = selector.random_select_sqlite(lower_bound=starsLowerBound,
+                                           upper_bound=starsUpperBound,
+                                           difficulty=difficulty,
+                                           category=category)
 
     json_return = {
         'ret_type': 0,
@@ -40,7 +43,7 @@ def handle_post():
         json_return['MusicName'] = result[1]
         json_return['Difficulty'] = result[2]
         json_return['Stars'] = result[3]
-        
+
     print(result)
     return jsonify(json_return), 201
 
